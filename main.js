@@ -1,80 +1,101 @@
-const rpsArray = ["rock", "paper", "scissors"];
+// const rpsArray = ["rock", "paper", "scissors"];
 
-let playerScore = 0;
-let CPUscore = 0;
+// Player Selection of RPS
+function getPlayerSelection() {
+    playerSelection = prompt("Type Rock, Paper or Scissors").toLowerCase();
+    
+    let playerSelectionCap = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
+    
+    let playerRock = "Rock";
+    let playerPaper = "Paper";
+    let playerScissors = "Scissors";
 
-// let playerSelection = prompt("Type Rock, Paper or Scissors").toLowerCase();
+    switch (playerSelectionCap) {
+        case "Rock":
+            console.log("YOU chooses Rock 🗿")
+            return playerRock;
+        case "Paper":
+            console.log("YOU chooses Paper 📜")
+            return playerPaper;
+        case "Scissors":
+            console.log("YOU chooses Scissors ✂️")
+            return playerScissors;
+        case null:
+            break;
+    }
+}
 
-
-// Computer Selection
+// Computer Selection of RPS
 function getCPUselection() {
     let CPUselection = Math.floor(Math.random() * 3)
-    
+
+    // WILL RETURN THIS VALUE BELOW
     let CPUrock = "Rock";
     let CPUpaper = "Paper";
     let CPUscissors = "Scissors";
-    
 
     switch (CPUselection) {
         case 0:
-            console.log("Computer chooses rock 🗿")
+            console.log("CPU chooses Rock 🗿")
             return CPUrock;
-            break;
         case 1:
-            console.log("Computer chooses paper 📜")
+            console.log("CPU chooses Paper 📜")
             return CPUpaper;
-            break;
         case 2:
-            console.log("Computer chooses scissors ✂️")
+            console.log("CPU chooses Scissors ✂️")
             return CPUscissors;
-            break;
         default:
             console.log("didn't pick anything");
             return null;
     }
 }
+// Score
+let playerScore = 0;
+let CPUscore = 0;
 
 // Game Started
-function playRound(playerSelection) {
-    playerSelection = prompt("Type Rock, Paper or Scissors").toLowerCase();
-
-    if (playerSelection === "rock") {
-        console.log("You choose rock 🗿");
-    } else if (playerSelection === "paper") {
-        console.log("You choose paper 📜");
-    } else if (playerSelection === "scissors") {
-        console.log("You choose scissors ✂️");
-    }
-
-    if ((playerSelection === "rock" && getCPUselection() === "Scissors") ||
-        (playerSelection === "paper" && getCPUselection() === "Rock") ||
-        (playerSelection === "scissors" && getCPUselection() === "Paper")
-    ) {
-        ++playerScore;
-        console.log("YOU WIN!");
-    } else if (
-        (playerSelection === "rock" && getCPUselection() === "Paper") ||
-        (playerSelection === "paper" && getCPUselection() === "Scissors") ||
-        (playerSelection === "scissors" && getCPUselection() === "Rock")
-    ) {
-        ++CPUscore;
+function playRound(playerSelection, CPUselection) {
+    
+    if (playerSelection === CPUselection) {
+        // console.log("TIED!")
+    } else if (playerSelection === "Rock" && CPUselection === "Paper") { // ROCK SECTION
+        CPUscore++;
         console.log("YOU LOST!");
-    } else if ((playerSelection === "rock" && getCPUselection() === "Rock") ||
-        (playerSelection === "paper" && getCPUselection() === "Paper") ||
-        (playerSelection === "scissors" && getCPUselection() === "Scissors")
-    ) {
-        console.log("TIED!");
+    } else if (playerSelection === "Rock" && CPUselection === "Scissors") {
+        playerScore++;
+        console.log("YOU WIN!");
+    } else if (playerSelection === "Paper" && CPUselection === "Scissors") { // PAPER SECTION
+        CPUscore++;
+        console.log("YOU LOST!");
+    } else if (playerSelection === "Paper" && CPUselection === "Rock") {
+        playerScore++;
+        console.log("YOU WIN!");
+    } else if (playerSelection === "Scissors" && CPUselection === "Rock") { // SCISSORS SECTION
+        CPUscore++;
+        console.log("YOU LOST!");
+    } else if (playerSelection === "Scissors" && CPUselection === "Paper") {
+        playerScore++;
+        console.log("YOU WIN!");
     } else {
-        console.log("Cancelled or typo");
+        console.log("Typo or cancelled")
     }
 
-    console.log("===================================");
+    return {playerScore, CPUscore};
+}
+
+function winnerCount() {
+    console.log("%c =================", "font-size: 1rem; color: red;");
+    console.log("%c Total Score", "font-size: 1rem; color: red;");
+    console.log("Player score: " + playRound().playerScore);
+    console.log("CPU score: " + playRound().CPUscore);
+    console.log("%c =================", "font-size: 1rem; color: red;");
+
+    // if (playRound().playerScore || playRound().CPUscore === 5) {
+    //     b
+    // }
 }
 
 for (let i = 0; i < 5; i++) {
-    playRound();   
+    playRound(getPlayerSelection(), getCPUselection());
+    winnerCount();
 }
-
-console.log("%c =====SCORE=====", "color: red; font-size:1rem");
-console.log("Player Score: " + playerScore);
-console.log("CPU Score: " + CPUscore);
