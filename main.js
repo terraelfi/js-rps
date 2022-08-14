@@ -55,29 +55,38 @@ let CPUscore = 0;
 
 // Game Started
 function playRound(playerSelection, CPUselection) {
+
+    let playerWin;
+    let CPUwin;
     
     if (playerSelection === CPUselection) {
         // console.log("TIED!")
     } else if (playerSelection === "Rock" && CPUselection === "Paper") { // ROCK SECTION
-        CPUscore++;
-        console.log("YOU LOST!");
+        CPUwin = true;
+        console.log("📜 beats 🗿 : CPU Wins!");
     } else if (playerSelection === "Rock" && CPUselection === "Scissors") {
-        playerScore++;
-        console.log("YOU WIN!");
+        playerWin = true;
+        console.log("🗿 beats ✂️ : Player Wins!");
     } else if (playerSelection === "Paper" && CPUselection === "Scissors") { // PAPER SECTION
-        CPUscore++;
-        console.log("YOU LOST!");
+        CPUwin = true
+        console.log("✂️ beats 📜 : CPU Wins!");
     } else if (playerSelection === "Paper" && CPUselection === "Rock") {
-        playerScore++;
-        console.log("YOU WIN!");
+        playerWin = true;
+        console.log("📜 beats 🗿 : Player Wins!");
     } else if (playerSelection === "Scissors" && CPUselection === "Rock") { // SCISSORS SECTION
-        CPUscore++;
-        console.log("YOU LOST!");
+        CPUwin = true
+        console.log("🗿 beats ✂️ : CPU Wins!");
     } else if (playerSelection === "Scissors" && CPUselection === "Paper") {
-        playerScore++;
-        console.log("YOU WIN!");
+        playerWin = true;
+        console.log("✂️ beats 📜 : Player Wins!");
     } else {
         console.log("Typo or cancelled")
+    }
+
+    if (playerWin === true) {
+        playerScore++;
+    } else if (CPUwin === true) {
+        CPUscore++;
     }
 
     return {playerScore, CPUscore};
@@ -89,13 +98,28 @@ function winnerCount() {
     console.log("Player score: " + playRound().playerScore);
     console.log("CPU score: " + playRound().CPUscore);
     console.log("%c =================", "font-size: 1rem; color: red;");
-
-    // if (playRound().playerScore || playRound().CPUscore === 5) {
-    //     b
-    // }
 }
 
 for (let i = 0; i < 5; i++) {
     playRound(getPlayerSelection(), getCPUselection());
     winnerCount();
 }
+
+if (playerScore > CPUscore) {
+    console.log("CONGRATULATIONS YOU Beats CPU! 🥳🎉");
+} else if (playerScore === CPUscore) {
+    console.log("TIED! ♻️ Restart to play again!");
+} else {
+    console.log("HAHA YOU Lose to a JavaScript Program 🤡");
+}
+
+// for (let i = 0; i < 20; i++) {
+//     if (playerScore === 5) {
+//         console.log("CONGRATULATIONS YOU Beats CPU! 🥳🎉");
+//     } else if (CPUscore === 5) {
+//         console.log("HAHA YOU Lose to a JavaScript Program 🤡");
+//     } else {
+//         playRound(getPlayerSelection(), getCPUselection());
+//     }
+//     winnerCount();
+// }
